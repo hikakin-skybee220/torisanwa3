@@ -1,0 +1,146 @@
+ <div class="container mt-3">
+        <p class="choice">お支払い方法を選ぶ</p>        
+        <form class="mb-4">
+            <div id="pay" class="pay col-12">PayPay</div>
+            <div id="pay2" class="pay col-12 my-2">LinePay</div>
+          <div class="form-group">              
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>クレジットカード</option>
+              <option>MasterCard</option>
+              <option>VisaCard</option>
+              <option>JCB</option>
+              <option>AMEX</option>
+            </select>
+          </div>
+        </form>
+        <div class="border"></div>
+        <p class="p_conform pt-3">ご注文内容の確認</p>
+    </div>
+
+    <section class="s_menus"> 
+        <% @orders.each do |order| %>
+            <div class="menu d-flex">
+                <div class="m_left col-9">
+                    <p class="m_name"><%=order.name%></p>
+                    <p class="m_account"><%=order.small_plate%></p>
+                    <p class="m_size"><%=order.size%></p>
+                    <p class="m_etc"><%=order.etc%></p>
+                    <% menu=Menu.find_by(name:order.name)%>
+                    <p class="m_price" id="price"><%=menu.price%></p>                  
+                </div>
+                <div class="m_right col-3">
+                    <div class="m_change">
+                        <%=link_to("変更", "/orders/edit/#{order.id}")%>
+                    </div>
+                    <div class="circles d-flex">
+                        <div class="circle mr-3"><span id="minus">-</span></div>
+                        <div class="number" id="number"><%=order.quantity%></div>
+                        <div class="circle ml-3"><span id="plus">+</span></div>
+                    </div>                
+                </div>
+            </div>
+            <div class="border"></div>          
+        <% end %>
+        <p class="totalprice pl-3">合計&nbsp; ￥<span id="totalPrice">0</span> &nbsp;(税込) </p>
+    </section>
+
+    <div class="container">          
+        <p class="conform mt-2">注文内容を確認します。次の画面で『決済を確定する』を選択するまで調理は開始されず、お支払いも確定しません。</p>      
+        <%=link_to("/orders/decision",{method:"post", class: "kkk col"})do%>
+            <button class="enter">注文を確定する</button>
+        <% end %>
+        <%=link_to("/orders/index",{class: "kkk col"})do%>
+            <button class="enter">商品を追加する</button>
+        <% end %>
+        <%=link_to("/orders/destroy/#{@order.seat_number}",{method:"post", class: "kkk col"})do%>
+            <button class="cancel mt-3">キャンセル</button>
+        <% end %>
+
+        <a class="kkk col" href="#">              
+            <button class="cancel mt-3">キャンセル</button>
+        </a>          
+    </div>
+
+<script>
+    let num = 0;
+    let num_kara=0;
+    let pri=1250;    
+    let pri_kara=750;      
+    let totalPri=0;
+    let totalPri_kara=0;
+
+
+    const minus=document.getElementById('minus');
+    const minus_kara=document.getElementById('minus_kara');
+    const plus=document.getElementById('plus');
+    const plus_kara=document.getElementById('plus_kara');
+    const number=document.getElementById('number');
+    const number_kara=document.getElementById('number_kara');
+    const price=document.getElementById('price');
+    const price_kara=document.getElementById('price_kara');
+    const totalPrice=document.getElementById('totalPrice');
+
+    const pay_click=document.getElementById('pay');
+    const pay2_click=document.getElementById('pay2');
+
+    
+
+    minus.addEventListener('click',()=>{
+        if(num>0){
+        num--;
+        number.textContent=num;     
+        price.textContent=`￥${pri*num}(税込)`;  
+        totalPri=num*pri;    
+        getTotalPrice(totalPri,totalPri_kara);    
+        }
+    });
+    plus.addEventListener('click',()=>{
+        num++;
+        number.textContent=num;  
+        price.textContent=`￥${pri*num}(税込)`;  
+        totalPri=num*pri;    
+        getTotalPrice(totalPri,totalPri_kara);    
+    });
+    minus_kara.addEventListener('click',()=>{
+        if(num_kara>0){
+        num_kara--;
+        number_kara.textContent=num_kara;     
+        price_kara.textContent=`￥${pri_kara*num_kara}(税込)`;  
+        totalPri_kara=num_kara*pri_kara;   
+        getTotalPrice(totalPri,totalPri_kara);     
+        }
+    });
+    plus_kara.addEventListener('click',()=>{
+        num_kara++;
+        number_kara.textContent=num_kara  
+        price_kara.textContent=`￥${pri_kara*num_kara}(税込)`;  
+        totalPri_kara=num_kara*pri_kara;  
+        getTotalPrice(totalPri,totalPri_kara);      
+    });
+
+    const getTotalPrice=(totalPri,totalPri_kara)=>{
+        tPrice=totalPri+totalPri_kara;
+        totalPrice.textContent=tPrice;
+    }
+
+
+    
+    pay_click.addEventListener('click',()=>{             
+        pay_click.classList.remove('pay');
+        pay_click.classList.add('paypay');
+    });
+    pay2_click.addEventListener('click',()=>{             
+        pay2_click.classList.remove('pay2');
+        pay2_click.classList.add('paypay');
+    });
+
+    
+
+    
+</script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
