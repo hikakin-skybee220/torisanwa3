@@ -1,0 +1,142 @@
+*{
+    margin: 0;
+    padding: 0;
+    color: #666;
+}
+
+body{
+    background-color: #f8f8f8;
+}
+header{
+    height: 90px;    
+    position: relative;
+}
+.menus{
+    justify-content: center;  
+}
+.menus a, .m_change a{
+    color: #666;
+}
+.item{
+    border: 2px solid #e8e8e8;
+    border-radius: 10px;
+    padding: 0;
+    margin: 0 5px;
+    background-color: #fff;    
+}
+.name,.text,.detail p,.radio,.choice{
+    background-color: #fff;
+    padding: 0 5px;
+}
+.detail p{
+    color: #666;
+    background-color: #fff;
+}
+
+.item img{
+    width: 100%;
+    padding: 0px;
+}
+
+.menus .active{
+    border-bottom: 2px solid red;  
+}
+.active:hover{
+    color: #666;
+
+}
+.container {
+
+}
+.cart{
+    
+}
+.cart-modal-wrapper {
+    display: none;
+}
+.open{
+    display: block;
+    
+}
+.cart-item img{
+    width: 20%;
+}
+
+
+
+.s_menus{
+    background-color: #e8e7e0;
+    width: 100%;
+    height: auto;
+    
+}
+.pay{
+    border: 1px solid #999;
+    border-radius: 10px;
+    text-align: left;
+    background-color: white;
+    padding: 7px 0 7px 15px;
+}
+.form-control{
+    border-radius: 10px;
+    border:1px solid #999; 
+}
+.m_left{
+    padding: 0 0 0 15px;
+}
+.m_account, .m_size,.m_etc{
+    font-size: 10px;
+    margin-top: -10px;
+}
+
+.m_price{
+    margin: 30px 0;
+}
+.m_right{
+    padding: 0;
+}
+
+.m_change{
+    background-color: white;
+    border: 1px solid #666;
+    border-radius: 7px;
+    text-align: center;
+    padding: 10px 0px;
+    margin:20px 20px 0 0;
+    color: #666;
+}
+.circles{
+    margin:20px 0 0 8px
+}
+.totalprice{
+    padding-top: 12px;
+}
+.enter{
+    border: 1px solid red;
+    border-radius: 10px;
+    background-color: #ff385d;
+    color: white;
+    width: 90%;
+    height: 50px;
+}
+.cancel{
+    border: 1px solid #a0a0a0;
+    border-radius: 10px;
+    background-color: #a0a0a0;
+    color: white;
+    width: 90%;
+    height: 50px;
+}
+.conform{
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.paypay{
+    border: 1px solid red;
+    border-radius: 10px;
+    text-align: left;
+    background-color: white;
+    padding: 7px 0 7px 15px;
+
+}

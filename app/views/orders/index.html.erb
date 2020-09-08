@@ -1,0 +1,134 @@
+<% if session[:user_id] %>
+  <li>
+    <%="あなたの席番号は#{session[:user_id]}"%>
+  </li>
+<% end %>
+    <div class="cart" id="cart">        
+        カート番号は<%=@orders.count%>     
+    </div>
+    <div class="cart-modal-wrapper" id="cart-modal">
+        <% @orders.each do |order|%>
+            <%=link_to("/orders/edit/#{order.id}") do %>
+                <div class="cart-item">
+                    <% @menus.each do |menu|%>
+                        <% if menu.name == order.name %>
+                            <img src="<%="/img/#{menu.image_name}"%>" alt="">                              
+                        <% end %>
+                    <% end %>
+                    <p id="name" class="name pt-3"><%=order.name%><br><%=order.small_plate%></p>
+                    <p class="text"><%=order.size%></p>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+  <header>
+    <div class="menus"></div>
+    <nav class="menus d-flex pt-2">
+      <div class="nav" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-first-tab" data-toggle="tab" href="#nav-first" role="tab" aria-controls="nav-home" aria-selected="true">親子丼</a>
+        <a class="nav-item nav-link" id="nav-second-tab" data-toggle="tab" href="#nav-second" role="tab" aria-controls="nav-profile" aria-selected="false">カツ丼</a>
+        <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#nav-third" role="tab" aria-controls="nav-contact" aria-selected="false">唐揚げ定食</a>
+        <a class="nav-item nav-link" id="nav-fourth-tab" data-toggle="tab" href="#nav-fourth" role="tab" aria-controls="nav-contact" aria-selected="false">一品</a>
+      </div>
+    </nav>
+  </header>
+
+
+
+ <div class="container p-0s">
+    <h1 class="title text-center py-3">
+      商品一覧
+    </h1>
+
+     <!-- １ページ目 -->    
+     <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-first" role="tabpanel" aria-labelledby="nav-first-tab">
+          <div class="container d-flex col-12">                       
+            <% @menus.each do |menu|%>
+                <% if menu.item_id == 1 %>
+                    <div class="py-3 col-6 p-0">                
+                        <%=link_to("/orders/#{menu.id}") do %>
+                            <div id="" class="item">        
+                            <img src="<%="/img/#{menu.image_name}"%>" alt="">
+                            <p id="name" class="name pt-3"><%=menu.name%></p>
+                            <p class="text"><%=menu.price%></p>
+                            </div>                
+                        <% end %>              
+                    </div>              
+                <% end %>
+            <% end %>
+          </div>
+      </div>        
+  <!-- 2ページ目 -->
+      <div class="tab-pane fad" id="nav-second" role="tabpanel" aria-labelledby="nav-second-tab">
+         <div class="container d-flex col-12">           
+            <% @menus.each do |menu|%>
+                <% if menu.item_id == 2 %>
+                    <div class="py-3 col-6 p-0">                
+                        <%=link_to("/orders/#{menu.id}") do %>
+                            <div id="" class="item">        
+                            <img src="<%="/img/#{menu.image_name}"%>" alt="">
+                            <p id="name" class="name pt-3"><%=menu.name%></p>
+                            <p class="text"><%=menu.price%></p>
+                            </div>                
+                        <% end %>              
+                    </div>                            
+                <% end %>
+            <% end %>
+          </div>
+     </div>   
+      <!-- 3ページ目 -->
+      <div class="tab-pane fade" id="nav-third" role="tabpanel" aria-labelledby="nav-third-tab">
+         <div class="container d-flex col-12">           
+            <% @menus.each do |menu|%>
+                <% if menu.item_id == 3 %>
+                    <div class="py-3 col-6 p-0">                
+                        <%=link_to("/orders/#{menu.id}") do %>
+                            <div id="" class="item">        
+                            <img src="<%="/img/#{menu.image_name}"%>" alt="">
+                            <p id="name" class="name pt-3"><%=menu.name%></p>
+                            <p class="text"><%=menu.price%></p>
+                            </div>                
+                        <% end %>              
+                    </div>                            
+                <% end %>
+            <% end %>
+          </div>
+     </div>
+      <!-- ４ページ目 -->
+      <div class="tab-pane fade" id="nav-fourth" role="tabpanel" aria-labelledby="nav-fourth-tab">
+         <div class="container d-flex col-12">           
+            <% @menus.each do |menu|%>
+                <% if menu.item_id == 4 %>
+                    <div class="py-3 col-6 p-0">                
+                        <%=link_to("/orders/#{menu.id}") do %>
+                            <div id="" class="item">        
+                            <img src="<%="/img/#{menu.image_name}"%>" alt="">
+                            <p id="name" class="name pt-3"><%=menu.name%></p>
+                            <p class="text"><%=menu.price%></p>
+                            </div>                
+                        <% end %>              
+                    </div>               
+                <% end %>
+            <% end %>
+        </div>
+      </div>
+  </div>
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script>
+        $('#cart').click(function(){
+            var CartModal = $('#cart-modal');
+            if (CartModal.hasClass('open')){
+                CartModal.removeClass('open');                
+            }else{
+                CartModal.addClass('open');                
+            }
+        }); 
+    
+    </script>

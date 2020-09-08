@@ -1,0 +1,40 @@
+<div class="container">
+    <h1 class="title text-center py-3">
+      詳細メニュー
+    </h1>
+
+    <div class="container">  
+        <%=form_tag("/orders/#{@order.id}/update") do%>
+            <div class="item">
+                <img src="<%="/img/#{@menu.image_name}"%>" alt="" class="">
+                <p class="name pt-3"><%=@menu.name%></p>
+                <p class="account">ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。</p>                
+                <% if @menu.item_id<3 %>              
+                    <div class="radio mb-4">
+                        <p class="choice">小皿を選択してください</p>
+                        <input type="radio" name="btn_small_plate" value="名古屋コーチン入り鶏肉団子" <%if @order.small_plate=="名古屋コーチン入り鶏肉団子"%>checked <% end %>　>鶏肉団子&nbsp;|
+                        <input type="radio" name="btn_small_plate" value="梅干し" <%if @order.small_plate=="梅干し"%>checked <% end %> >梅干し&nbsp;|
+                        <input type="radio" name="btn_small_plate" value="なし" <%if @order.small_plate=="なし"%>checked <% end %> >なし
+                    </div>
+                <% end %>
+                <p class="text"><%=@menu.price%></p>    
+                <p class="choice">席番号を入力してください</p>  
+                <input type="text" name="seat_number" value="<%=@orderin.seat_number%>">  
+                <% if @menu.item_id<4 %>
+                    <div class="radio mb-4">
+                            <p class="choice">サイズを選択してください</p>
+                            <input type="radio" name="btn_size" value="小盛り" required <% if @order.size=="小盛り" %> checked  <%end%>>小盛り&nbsp;|
+                            <input type="radio" name="btn_size" value="普通" <% if @order.size=="普通"%> checked  <%end%>>普通&nbsp;|
+                            <input type="radio" name="btn_size" value="大盛り" <% if @order.size=="大盛り"%> checked  <%end%>>大盛り
+                    </div>                  
+                <% end %>
+                <p>ご要望</p>
+                <textarea name="etc" id="" cols="35" rows="2"><%=@order.etc%></textarea>        
+            </div>
+
+            <div class="d-flex ml-5 mt-3">
+                <%= submit_tag "変更", :name=>"btn_update" %>
+                <%= submit_tag "キャンセル", :name=>"btn_cancel" %>
+            </div>
+        <% end %>
+  </div>

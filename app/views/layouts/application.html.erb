@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html　lang="ja">
+  <head>
+    <title>鶏三和</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    
+  </head>
+
+  <body><% if flash[:notice] %>
+      <div id="flash" class="flash time-limit">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+      
+    <script>
+
+const disapper_flash = ()=>{
+  document.getElementById('flash').textContent = '';
+}
+const timeout = 1000*2;
+
+
+setTimeout(disapper_flash,timeout);
+
+
+    </script>
+    <%= yield %>
+  </body>
+</html>
