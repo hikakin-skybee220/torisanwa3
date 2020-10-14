@@ -1,29 +1,59 @@
-<% if session[:user_id] %>
-  <li>
+<body class="all_index">
+<%#<% if session[:user_id] %>
+  <%#<li>
     <%="あなたの席番号は#{session[:user_id]}"%>
-  </li>
-<% end %>
-    <div class="cart" id="cart">        
-        カート番号は<%=@orders.count%>     
+  <%#</li>
+<%#<% end %>
+  <header >
+    <div class="h_top d-flex py-2 " id="h_top">
+      <div class="h_icon">
+        <img src="/img/icon.png" alt="" class="img-fluid icon ml-3">
+      </div>
+
+      <div class="ml-auto d-flex">
+        <div class="cart" id="cart">
+          <img src="/img/cart1.png" alt="" class="img-fluid cart_img mt-2 mr-3">
+          <div  class="cart_number "><%=@orders.count%></div>
+        </div>        
+      </div>
     </div>
-    <div class="cart-modal-wrapper" id="cart-modal">
+    
+
+    
+    <div class="cart-modal-wrapper px-3" id="cart-modal">
+        <img src="/img/angle1.png" alt="" class="cart-angle">
         <% @orders.each do |order|%>
-            <%=link_to("/orders/edit/#{order.id}") do %>
+            <div class="border my-2 border-secondary b_border cart-border"></div>   
+            <%=link_to("/orders/#{order.id}/edit") do %>
                 <div class="cart-item">
-                    <% @menus.each do |menu|%>
-                        <% if menu.name == order.name %>
-                            <img src="<%="/img/#{menu.image_name}"%>" alt="">                              
-                        <% end %>
-                    <% end %>
-                    <p id="name" class="name pt-3"><%=order.name%><br><%=order.small_plate%></p>
-                    <p class="text"><%=order.size%></p>
+                    <div class="d-flex py-3"　>
+                        <div class="cart-image col-5 px-2">
+                            <% @menus.each do |menu|%>
+                                <% if menu.name == order.name %>
+                                    <img src="<%="/img/#{menu.image_name}"%>" alt="">                              
+                                <% end %>
+                            <% end %>
+                        </div>
+                        <div class="cart-detail col-7 px-0">
+                            <p  class="c_name m-1"><%=order.name%><br><%=order.small_plate%><br><%=order.size%><br>
+                            <% if order.quantity > 1 %>
+                              <span class="c_quantity">×<%=order.quantity%></span>
+                            <% end %>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             <% end %>
         <% end %>
+        <% if session[:user_id] !=nil %>
+            <%= link_to("/orders/#{@current_user.seat_number}/check",{class: " kkk"}) do%>
+                <button class=" enter mt-2 mb-4 col-9 cart-enter" >注文手続きへ</button>
+            <% end %>          
+        <% end %>
     </div>
-  <header>
+
     <div class="menus"></div>
-    <nav class="menus d-flex pt-2">
+    <nav class="menus d-flex mt-1 py-1">
       <div class="nav" id="nav-tab" role="tablist">
         <a class="nav-item nav-link active" id="nav-first-tab" data-toggle="tab" href="#nav-first" role="tab" aria-controls="nav-home" aria-selected="true">親子丼</a>
         <a class="nav-item nav-link" id="nav-second-tab" data-toggle="tab" href="#nav-second" role="tab" aria-controls="nav-profile" aria-selected="false">カツ丼</a>
@@ -35,23 +65,19 @@
 
 
 
- <div class="container p-0s">
-    <h1 class="title text-center py-3">
-      商品一覧
-    </h1>
-
+ <div class="container p-0 i_index">
      <!-- １ページ目 -->    
      <div class="tab-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="nav-first" role="tabpanel" aria-labelledby="nav-first-tab">
-          <div class="container d-flex col-12">                       
+          <div class="container d-flex col-12 px-2">                       
             <% @menus.each do |menu|%>
                 <% if menu.item_id == 1 %>
-                    <div class="py-3 col-6 p-0">                
+                    <div class="my-3 col px-0 mx-2 menu-index">                
                         <%=link_to("/orders/#{menu.id}") do %>
-                            <div id="" class="item">        
-                            <img src="<%="/img/#{menu.image_name}"%>" alt="">
-                            <p id="name" class="name pt-3"><%=menu.name%></p>
-                            <p class="text"><%=menu.price%></p>
+                            <div id="" class="item text-center">        
+                                <img src="<%="/img/#{menu.image_name}"%>" alt="" class="menu-index-img">
+                                <p id="name" class="name "><%=menu.name%></p>
+                                <p class="text my-0">¥<%=menu.value.to_s(:delimited)%></p>
                             </div>                
                         <% end %>              
                     </div>              
@@ -59,17 +85,27 @@
             <% end %>
           </div>
       </div>        
+      <div id="scrolling">
+<ul>
+    <li>
+        Slide #1
+    </li>
+    <li>
+        Slide #2
+    </li>
+</ul>
+</div>
   <!-- 2ページ目 -->
       <div class="tab-pane fad" id="nav-second" role="tabpanel" aria-labelledby="nav-second-tab">
-         <div class="container d-flex col-12">           
+         <div class="container d-flex col-12 px-2">           
             <% @menus.each do |menu|%>
                 <% if menu.item_id == 2 %>
-                    <div class="py-3 col-6 p-0">                
+                    <div class="my-3 col-6 px-0 mx-2 menu-index">                
                         <%=link_to("/orders/#{menu.id}") do %>
-                            <div id="" class="item">        
+                            <div id="" class="item text-center">        
                             <img src="<%="/img/#{menu.image_name}"%>" alt="">
-                            <p id="name" class="name pt-3"><%=menu.name%></p>
-                            <p class="text"><%=menu.price%></p>
+                            <p id="name" class="name"><%=menu.name%></p>
+                            <p class="text my-0">¥<%=menu.value.to_s(:delimited)%></p>
                             </div>                
                         <% end %>              
                     </div>                            
@@ -79,15 +115,15 @@
      </div>   
       <!-- 3ページ目 -->
       <div class="tab-pane fade" id="nav-third" role="tabpanel" aria-labelledby="nav-third-tab">
-         <div class="container d-flex col-12">           
+         <div class="container d-flex col-12 px-2">           
             <% @menus.each do |menu|%>
                 <% if menu.item_id == 3 %>
-                    <div class="py-3 col-6 p-0">                
+                    <div class="my-3 col px-0 mx-2 menu-index">                
                         <%=link_to("/orders/#{menu.id}") do %>
-                            <div id="" class="item">        
+                            <div id="" class="item text-center">        
                             <img src="<%="/img/#{menu.image_name}"%>" alt="">
-                            <p id="name" class="name pt-3"><%=menu.name%></p>
-                            <p class="text"><%=menu.price%></p>
+                            <p id="name" class="name"><%=menu.name%></p>
+                            <p class="text my-0">¥<%=menu.value.to_s(:delimited)%></p>
                             </div>                
                         <% end %>              
                     </div>                            
@@ -97,15 +133,15 @@
      </div>
       <!-- ４ページ目 -->
       <div class="tab-pane fade" id="nav-fourth" role="tabpanel" aria-labelledby="nav-fourth-tab">
-         <div class="container d-flex col-12">           
+         <div class="container d-flex col-12 px-2">           
             <% @menus.each do |menu|%>
                 <% if menu.item_id == 4 %>
-                    <div class="py-3 col-6 p-0">                
+                    <div class="my-3 col px-0 mx-2 menu-index">                
                         <%=link_to("/orders/#{menu.id}") do %>
-                            <div id="" class="item">        
+                            <div id="" class="item text-center">        
                             <img src="<%="/img/#{menu.image_name}"%>" alt="">
-                            <p id="name" class="name pt-3"><%=menu.name%></p>
-                            <p class="text"><%=menu.price%></p>
+                            <p id="name" class="name"><%=menu.name%></p>
+                            <p class="text my-0">¥<%=menu.value.to_s(:delimited)%></p>
                             </div>                
                         <% end %>              
                     </div>               
@@ -114,6 +150,9 @@
         </div>
       </div>
   </div>
+  <div id="fade-layer"></div>
+    
+</body>
     
 
     <!-- Optional JavaScript -->
@@ -121,14 +160,35 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="scripts/itemslide.min.js"></script>
     <script>
         $('#cart').click(function(){
-            var CartModal = $('#cart-modal');
-            if (CartModal.hasClass('open')){
-                CartModal.removeClass('open');                
-            }else{
-                CartModal.addClass('open');                
+            if ($('.cart_number').text()!=0) {
+                var CartModal = $('#cart-modal');
+                if (CartModal.hasClass('open')){
+                    CartModal.removeClass('open');     
+                    $('#fade-layer').css('visibility', 'hidden');    
+                }else{
+                    CartModal.addClass('open');    
+                    $('#fade-layer').css('visibility', 'visible');        
+                }
+                
             }
         }); 
+        $('#fade-layer').click(function(){
+            if ($('#cart-modal').hasClass('open')) {
+                $('#cart-modal').removeClass('open');
+                $('#fade-layer').css('visibility', 'hidden');  
+            }
+        })
+
+        const iBorder = 1;
+        let borderId = $('.cart-border').attr('id',_=> 'border'+iBorder);
+        $('#border1').addClass('d-none');
     
+    var carousel;
+$(document).ready(function () {
+    carousel = $("ul");
+    carousel.itemslide();
+});
     </script>

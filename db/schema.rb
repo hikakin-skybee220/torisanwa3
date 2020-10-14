@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_111121) do
+ActiveRecord::Schema.define(version: 2020_09_15_152653) do
 
   create_table "decisions", force: :cascade do |t|
     t.string "seat_number"
@@ -21,15 +21,17 @@ ActiveRecord::Schema.define(version: 2020_08_18_111121) do
     t.text "etc"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "option"
   end
 
   create_table "menus", force: :cascade do |t|
     t.text "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "price"
     t.string "image_name"
     t.integer "item_id"
+    t.integer "price"
+    t.integer "value"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -41,6 +43,10 @@ ActiveRecord::Schema.define(version: 2020_08_18_111121) do
     t.string "size"
     t.text "etc"
     t.integer "quantity"
+    t.string "shichimi"
+    t.string "yuzu_pepper"
+    t.string "lemon"
+    t.integer "price"
   end
 
 end

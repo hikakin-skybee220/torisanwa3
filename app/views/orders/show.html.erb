@@ -1,54 +1,190 @@
-<div class="container">
-    <h1 class="title text-center py-3">
-      詳細メニュー
-    </h1>
+<body class="all_show">
+    
 
-    <div class="container">  
-        <div class="error_message">
-            <% if @error_messages %>
-                <% @error_messages.each do |error_message| %>
-                    <%=error_message%><br>              
-                <% end %>
-            <% else @error_message%>
-                <%=@error_message%>     
-            <% end %>
-        </div>
-        <%=form_tag("/orders/#{@menu.id}/create") do%>
-            <div class="item">
-                <img src="<%="/img/#{@menu.image_name}"%>" alt="" class="">
-                <p class="name pt-3"><%=@menu.name%></p>
-                <p class="account">ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。</p>                
-                <% if @menu.item_id<3 %>              
-                    <div class="radio mb-4">
-                        <p class="choice">小皿を選択してください</p>
-                        <input type="radio" name="btn_small_plate" value="名古屋コーチン入り鶏肉団子" required>鶏肉団子&nbsp;|
-                        <input type="radio" name="btn_small_plate" value="梅干し">梅干し&nbsp;|
-                        <input type="radio" name="btn_small_plate" value="なし">なし
+<div class="show-head ">
+    <%=link_to("/orders/index") do%>
+        <i class="fas fa-angle-left fa-3x"></i>
+    <% end %>
+    <p class="name show-name text-center"><%=@menu.name%></p>
+</div>
+<div class="item">
+    <div class="show-main-img">
+        <img src="<%="/img/#{@menu.image_name}"%>" alt="" class="mx-1">
+    </div>
+    <p class="account px-2 mx-1">ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。ここに説明分が入ります。</p>                    
+    <%=form_tag("/orders/#{@menu.id}/create",remote: true) do%>
+        <div class="mx-2">
+            <% if @menu.item_id<3 %> 
+                <p class="choice">小皿を選ぶ。</p>
+                <div class="small_plate_choice">
+                    <div class="d-flex text-center " style="justify-content:center;">
+                        <div class="col m-1 c_choice pien" id="radio_label">
+                            <label class="radio_label" ><input type="radio" name="btn_small_plate" value="名古屋コーチン入り鶏肉団子" class="radio" checked><img src="/img/img1-1.png" class="radio_image" id="label"><br>名古屋コーチン入り鶏肉団子</label>
+                        </div>
+                        <div class="col m-1  c_choice" id="radio_label2">
+                            <label class="radio_label" ><input type="radio" name="btn_small_plate" value="紀州南高梅はちみつ梅干し" class="radio"><img src="/img/img1-2.png" class="radio_image image-size" id="label2"><br>紀州南高梅はちみつ梅干し</label>
+                        </div>
                     </div>
-                <% end %>                
-                <p class="text"><%=@menu.price%></p>      
-                <p class="choice">席番号を入力してください</p>
-                <% if @current_user %>
-                    <input type="text" name="seat_number" value="<%=@current_user.seat_number%>">        
-                <% else %>
-                    <input type="text" name="seat_number" value="<%=params[:seat_number]%>" required>         
-                <% end %>
-                <% if @menu.item_id<4 %>
-                    <div class="radio mb-4">
-                            <p class="choice">サイズを選択してください</p>
-                            <input type="radio" name="btn_size" value="小盛り">小盛り&nbsp;|
-                            <input type="radio" name="btn_size" value="普通" checked>普通&nbsp;|
-                            <input type="radio" name="btn_size" value="大盛り">大盛り
-                    </div>                  
-                <% end %>
-                <p>ご要望</p>
-                <textarea name="etc" id="" cols="35" rows="2"></textarea>
-            </div>
+                    <div class="d-flex text-center mt-1" style="justify-content:center;">
+                        <div class="col m-1 c_choice" id="radio_label3">
+                            <label class="radio_label" ><input type="radio" name="btn_small_plate" value="なし" class="radio"><img src="/img/img1-3.png" class="radio_image image-size" id="label3"><br>なし</label>
+                        </div>
+                        <div class="col px-1 "></div>
+                    </div>
+                </div>
+                <div class="border my-3 border-secondary b_border"></div>
+            <% end %>
+            <% if @menu.item_id<4 %>
+                <p class="choice">サイズを選ぶ。</p>
+                <div class="size_choice">
+                    <div class="d-flex">
+                        <div class="col-4 p-1 ">
+                            <label class="radio_label2 c_choice" id="radio_label4"><input type="radio" name="btn_size" value="小盛り" class="radio radio_image" id="label4">小盛り</label>
+                        </div>
+                        <div class="col-4 p-1 ">
+                            <label class="radio_label2 c_choice pien" id="radio_label5"><input type="radio"  name="btn_size" value="普通" class="radio radio_image" id="label5" checked>普通</label>
+                        </div>
+                        <div class="col-4 p-1 ">
+                            <label class="radio_label2 c_choice" id="radio_label6"><input type="radio" name="btn_size" value="大盛り" class="radio radio_image" id="label6">大盛り</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="border my-3 border-secondary b_border"></div>
+            <% end %>
+            <% if @menu.item_id<3 %>
+                <p class="choice">七味唐辛子を選ぶ。</p>
+                <div class="option1_choice">
+                    <div class="d-flex text-center " style="justify-content:center;">
+                        <div class="col m-1 c_choice" id="radio_label7">
+                            <label class="radio_label" ><input type="radio" name="btn_shichimi" value="七味" class="radio"><img src="/img/img10.jpg" class="radio_image image-size" id="label7"><br>七味唐辛子</label>
+                        </div>
+                        <div class="col m-1  c_choice pien" id="radio_label8">
+                            <label class="radio_label" ><input type="radio" name="btn_shichimi" value="" class="radio" checked><img src="/img/img1-3.png" class="radio_image image-size" id="label8"><br>なし</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="border my-3 border-secondary b_border"></div>
+            <% end %>
+            <% if @menu.id==2 or @menu.id==6 %>
+                <p class="choice">柚子胡椒を選ぶ。</p>
+                <div class="option2_choice">
+                    <div class="d-flex text-center " style="justify-content:center;">
+                        <div class="col m-1 c_choice" id="radio_label9">
+                            <label class="radio_label" ><input type="radio" name="btn_yuzu_pepper" value="柚子胡椒" class="radio"><img src="/img/img9.jpg" class="radio_image" id="label9"><br>柚子胡椒</label>
+                        </div>
+                        <div class="col m-1  c_choice pien" id="radio_label10">
+                            <label class="radio_label" ><input type="radio" name="btn_yuzu_pepper" value="" class="radio" checked><img src="/img/img1-3.png" class="radio_image image-size" id="label10"><br>なし</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="border my-3 border-secondary b_border"></div>
+            <% end %>
+            <% if @menu.item_id==3 %>
+                <p class="choice">レモンを選ぶ。</p>
+                <div class="option3_choice">
+                    <div class="d-flex text-center " style="justify-content:center;">
+                        <div class="col m-1 c_choice" id="radio_label11">
+                            <label class="radio_label" ><input type="radio" name="btn_lemon" value="レモン" class="radio"><img src="/img/img11.jpg" class="radio_image image-size" id="label11"><br>レモン</label>
+                        </div>
+                        <div class="col m-1  c_choice pien" id="radio_label12">
+                            <label class="radio_label" ><input type="radio" name="btn_lemon" value="" class="radio" checked><img src="/img/img1-3.png" class="radio_image image-size" id="label12"><br>なし</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="border my-3 border-secondary b_border"></div>
+            <% end %>
+            <p class="choice">その他ご要望はありますか?<span class="skip"><br>ないようでしたらスキップしてください</span></p>            
+            <textarea class="t_area mb-3" name="etc" id="" cols="" rows="3"></textarea>
+        </div>
 
-            <div class="d-flex ml-5 mt-3">
-                <%= submit_tag "カートに追加", :name=>"btn_cart" %>
-                <%= submit_tag "会計に進む", :name=>"btn_check" %>
+        <div class="footer pb-5">
+            <div class="mx-3">
+                <div class="d-flex pt-5 pb-4" >
+                    <div class="col-6">
+                        <img class="img8" src="/img/img8.png" alt="">
+                        <img class="img7" src="/img/img1-4.png" alt="">    
+                    </div>                                        
+                    <% if @current_user %>
+                        <input class="seat_number col-6" type="text" name="seat_number" value="<%=@current_user.seat_number%>">        
+                    <% else %>
+                        <input class="seat_number col-6" type="text" name="seat_number" placeholder="席番号を入力" value="<%=params[:seat_number]%>" required>         
+                    <% end %>
+                </div>
+                <div class="border my-3 border-secondary b_border"></div>
+                <div class="d-flex">
+                    <p class="f_text my-2 col-8">￥<span class="mgr-5" id="s_price"><%=@menu.value.to_s(:delimited)%></span>(税込)</p>
+                    <input type="hidden" name="price" value="<%=@menu.value%>" id="hidden_price">
+                    <div class="circles d-flex col-4 m-0 p-0">
+                        <img src="/img/minus-circle.png" alt=""class="minus f_circle mr-3" id="s_minus">
+                        <div class="s_number"  id="s_number">1</div>
+                        <input type="hidden" name="quantity" value="1" id="hidden_quantity">
+                        <img src="/img/plus-circle.png" alt="" class="plus f_circle ml-3" id="s_plus">
+                    </div>      
+                </div>                
+                <div class="border my-3 border-secondary b_border"></div>  
+                <%= submit_tag "注文手続きへ", :name=>"btn_check", :class=>"enter kkk col mt-4" %>
+                <%= submit_tag "カートに追加", :name=>"btn_cart", :class=>"add mt-3 kkk col" %>
             </div>
-            
-        <% end %>
-  </div>
+        </div>
+    <% end %>  
+</div>
+</body>
+
+<script>         
+        $('.radio_image').click(function(){
+            var ClickId = $(this).attr('id');            
+            if (ClickId=="label" || ClickId=="label2" || ClickId=="label3") {
+                $('.small_plate_choice').find('.pien').removeClass('pien');                
+            }else if (ClickId=="label4" || ClickId=="label5" || ClickId=="label6") {
+                $('.size_choice').find('.pien').removeClass('pien');
+            }else if (ClickId=="label7" || ClickId=="label8") {
+                $('.option1_choice').find('.pien').removeClass('pien');
+            }else if (ClickId=="label9" || ClickId=="label10") {
+                $('.option2_choice').find('.pien').removeClass('pien');
+            }else if (ClickId=="label11" || ClickId=="label12") {
+                $('.option3_choice').find('.pien').removeClass('pien');
+            }          
+            var AddClass=$('#radio_' + ClickId).addClass('pien');
+        })      
+        
+        var count=$('#s_number').text();
+        function removeComma(number) {
+            var removed = number.replace(/,/g, '');
+            return parseInt(removed);
+        };
+        function addComma(num) {
+            var _num = num.replace( /^(-?\d+)(\d{3})/, "$1,$2" );
+            if(_num !== num) {
+                return addComma(_num);
+            }
+            return _num;
+        }    
+        var number = $('#s_price').text();
+        $('#s_minus').click(function(){
+            var removeNumber = removeComma(number);
+            if (count>0) {
+                count--;
+                $('#s_number').text(count);
+                $('#s_price').text(count*removeNumber);
+
+                let commaNumber = addComma($('#s_price').text());
+                $('#s_price').text(commaNumber);
+                $('#hidden_quantity').val(count);
+                $('#hidden_price').val(removeComma($('#s_price').text()));
+            }
+        })
+
+        $('#s_plus').click(function(){
+            var removeNumber = removeComma(number);            
+            count++;
+            $('#s_number').text(count);
+            $('#s_price').text(count*removeNumber);
+
+            let commaNumber = addComma($('#s_price').text());
+            $('#s_price').text(commaNumber);    
+            $('#hidden_quantity').val(count);   
+            $('#hidden_price').val(removeComma($('#s_price').text()));
+        })
+      
+    
+  </script>

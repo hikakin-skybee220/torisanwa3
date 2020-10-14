@@ -1,0 +1,240 @@
+ <body class="all_check">
+     
+ <div class="container mt-3">
+        <p class="choice">お支払い方法を選ぶ。</p>        
+        <form class="mb-4 payment">
+            <div id="pay1" class="pay col-12">PayPay</div>
+            <div id="pay2" class="pay col-12 my-2">LinePay</div>
+            <div class="form-group pay" id="pay3">              
+                <select class="form-control " id="exampleFormControlSelect1">
+                <option>クレジットカード</option>
+                <option>MasterCard</option>
+                <option>VisaCard</option>
+                <option>JCB</option>
+                <option>AMEX</option>
+                </select>
+            </div>
+        </form>
+        <div class="border my-2 border-secondary b_border"></div>
+        <p class="p_conform pt-2">ご注文内容の確認</p>
+    </div>
+
+    
+
+    <section class="s_menus py-3"> 
+        <% @orders.each do |order| %>
+            <div class="menu d-flex">
+                <div class="m_left col-8">
+                    <p class="m_name"><%=order.name%></p>
+                    <p class="m_account"><%=order.small_plate%></p>
+                    <p class="m_size"><%=order.size%></p>
+                    <p class="m_etc"><%=order.etc%></p>
+                    <% menu=Menu.find_by(name:order.name)%>
+                    <p class="m_price  mb-2" ><span class="m_m_price" id="price"><%=menu.value.to_s(:delimited)%></span>円 &nbsp;(税込)</p>                  
+                </div>
+                <div class="m_right col-4 px-3">
+                    <div class="m_change">
+                        <%=link_to("変更", "/orders/#{order.id}/edit", {class: ""})%>
+                    </div>
+                    <div class="circles d-flex">
+                        <div class=" mr-3"><span class="minus">-</span></div>
+                        <div class="number"><%=order.quantity%></div>
+                        <div class="ml-3"><span class="plus">+</span></div>
+                    </div>      
+                </div>
+            </div>
+            <div class="border m-3 border-secondary b_border"></div>          
+        <% end %>
+        <p class="totalprice pl-3 m-0">合計&nbsp; <span id="totalPrice"><%=@su.to_s(:delimited)%></span>円 &nbsp;(税込) </p>
+    </section>
+
+    <div class="container mb-5 mt-3">          
+        <p class="conform mt-1 mb-3">注文内容を確認します。次の画面で『決済を確定する』を選択するまで調理は開始されず、お支払いも確定しません。</p>      
+        <%= link_to("/orders/decision",{method:"post", class: "kkk"}) do%>
+            <button class="enter mt-1">注文を確定する</button>
+        <% end %>
+        <%=link_to("/orders/index",{class: "kkk"})do%>
+            <button class="add mt-3">商品を追加する</button>
+        <% end %>
+        <%= link_to("/orders/#{@order.seat_number}/destroy",{method:"post", class: "kkk"}) do%>
+            <button class="cancel mt-3">キャンセル</button>
+        <% end %> 
+    </div>
+ </body>
+
+<script>
+    $('.pay').click(function(){
+        if ($('.payment').find('.light')) {
+            $('.payment').find('.light').removeClass('light');
+            $(this).addClass('light');
+        }else{
+            $(this).addClass('light');
+        }
+    });
+
+    function removeComma(number) {
+    var removed = number.replace(/,/g, '');
+    return parseInt(removed);
+    };
+
+    let i_minus = 1;    
+    let id_minus = $('.minus').attr('id',_ => i_minus++);
+
+    let i_plus=1;
+    let id_plus = $('.plus').attr('id',_ =>i_plus++);
+
+    let i_number=1;    
+    let id_number = $('.number').attr('id',_ =>'number' + i_number++);
+
+    let i_price = 1;
+    let id_price = $('.m_m_price').attr('id',_=>"m_m_price" + i_price++);
+
+
+    let original_price1 = $('#m_m_price'+'1').text();
+    let original_prices1 = removeComma(original_price1);
+    // const original_price2 = $('#m_m_price'+'2').text();
+    // const original_prices2 = removeComma(original_price2);
+    const original_price3 = $('#m_m_price'+3).text();
+    const original_price4 = $('#m_m_price'+4).text();
+    const original_price5 = $('#m_m_price'+5).text();
+    // let original_price = $('#m_m_price'+getId).text();
+    // let original_prices = removeComma(original_price+getId)
+
+    $(id_minus).click(function(){
+        var getId=$(this).attr('id');
+        var count = $('#number'+getId).text();
+        // var count2 = removeComma(count);
+        // const original_price = $('#m_m_price'+getId).text();
+        // var original_prices = removeComma('original_price' + getId); 
+        // let value = ('original_prices'+getId);
+        // let original_value= document.getElementById('value');
+        if (count>0) {
+            count--;
+            $('#number'+getId).text(count);
+            $('#m_m_price'+getId).text(count*original_value);
+        //       console.log(getId);
+        // console.log(original_prices1);
+        // console.log(original_price2);
+        // console.log(count);
+        // console.log(count*original_price2);
+        }        
+    })
+    $(id_plus).click(function(){
+        var getId=$(this).attr('id');
+        var count = $('#number'+getId).text();     
+        const original_price = $('#m_m_price'+getId).text();
+        const original_price2 = removeComma(original_price)/count;      
+        // var original_prices = removeComma(`original_price`+${getId}); 
+        let value = (`original_prices+${getId}`);
+        let original_value= document.getElementById('value');
+        if(count==0){
+            // $('#m_m_price1').text()=original_prices1;
+            count++;
+            $('#number'+getId).text(count);
+            $('#m_m_price'+getId).text(original_price2);
+
+        }else{
+            count++;
+            $('#number'+getId).text(count);
+            $('#m_m_price'+getId).text(count*original_price2);
+        }
+        console.log(getId);
+        console.log(original_prices1);
+        console.log(original_prices2);
+        console.log(count);
+        console.log(count*original_price2);
+        
+    })
+
+    class OriginalPrices(){
+        let originalPrices = Int();
+    }
+
+
+
+    
+
+
+
+    <%#let num = 0;
+    let num_kara=0;
+    let pri=1250;    
+    let pri_kara=750;      
+    let totalPri=0;
+    let totalPri_kara=0;
+
+
+    const minus=document.getElementById('minus');
+    const minus_kara=document.getElementById('minus_kara');
+    const plus=document.getElementById('plus');
+    const plus_kara=document.getElementById('plus_kara');
+    const number=document.getElementById('number');
+    const number_kara=document.getElementById('number_kara');
+    const price=document.getElementById('price');
+    const price_kara=document.getElementById('price_kara');
+    const totalPrice=document.getElementById('totalPrice');
+
+    const pay_click=document.getElementById('pay');
+    const pay2_click=document.getElementById('pay2');
+
+    
+
+    minus.addEventListener('click',()=>{
+        if(num>0){
+        num--;
+        number.textContent=num;     
+        price.textContent=`￥${pri*num}(税込)`;  
+        totalPri=num*pri;    
+        getTotalPrice(totalPri,totalPri_kara);    
+        }
+    });
+    plus.addEventListener('click',()=>{
+        num++;
+        number.textContent=num;  
+        price.textContent=`￥${pri*num}(税込)`;  
+        totalPri=num*pri;    
+        getTotalPrice(totalPri,totalPri_kara);    
+    });
+    minus_kara.addEventListener('click',()=>{
+        if(num_kara>0){
+        num_kara--;
+        number_kara.textContent=num_kara;     
+        price_kara.textContent=`￥${pri_kara*num_kara}(税込)`;  
+        totalPri_kara=num_kara*pri_kara;   
+        getTotalPrice(totalPri,totalPri_kara);     
+        }
+    });
+    plus_kara.addEventListener('click',()=>{
+        num_kara++;
+        number_kara.textContent=num_kara  
+        price_kara.textContent=`￥${pri_kara*num_kara}(税込)`;  
+        totalPri_kara=num_kara*pri_kara;  
+        getTotalPrice(totalPri,totalPri_kara);      
+    });
+
+    const getTotalPrice=(totalPri,totalPri_kara)=>{
+        tPrice=totalPri+totalPri_kara;
+        totalPrice.textContent=tPrice;
+    }
+
+
+    
+    pay_click.addEventListener('click',()=>{             
+        pay_click.classList.remove('pay');
+        pay_click.classList.add('paypay');
+    });
+    pay2_click.addEventListener('click',()=>{             
+        pay2_click.classList.remove('pay2');
+        pay2_click.classList.add('paypay');
+    });
+%>
+    
+
+    
+</script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>

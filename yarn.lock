@@ -3948,6 +3948,11 @@ isstream@~0.1.2:
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
+itemslide@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/itemslide/-/itemslide-1.6.0.tgz#b8161fb9230071f4e7783bb07b93c19f4f74f0a7"
+  integrity sha512-6OYtSfWGGxkU/rfVxrF1MxxVSSQHSEVI8LKm553rDYRqUOtvGEYIJBMKv9KPCehpwahSvAaZkSfP1FPze0kGsA==
+
 jest-worker@^25.4.0:
   version "25.5.0"
   resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-25.5.0.tgz#2611d071b79cea0f43ee57a3d118593ac1547db1"
