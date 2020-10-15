@@ -25,3 +25,4 @@ Things you may want to cover:
 # torisanwa
 # torisanwa-2
 # torisanwa3
+# first_aws
